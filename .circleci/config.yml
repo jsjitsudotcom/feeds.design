@@ -30,7 +30,7 @@ add_git_user: &add_git_user
 #################################
 #      CIRCLE CI WORKFLOW       #
 #################################
-version: 2
+version: 2.1
 
 orbs:
  percy: percy/agent@0.1.2
@@ -40,6 +40,8 @@ jobs:
     docker: *docker
     working_directory: *working-directory
     steps:
+      - attach_workspace:
+         at: .
       - checkout
       - attach_workspace:
          at: .
