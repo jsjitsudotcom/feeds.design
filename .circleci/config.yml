@@ -69,6 +69,8 @@ jobs:
       - run: yarn test:ci
       - run: yarn build-storybook
       - run: yarn deploy-storybook
+      - run: yarn coveralls
+      - run: yarn release
 
 workflows:
   version: 2
