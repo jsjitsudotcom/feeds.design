@@ -31,6 +31,10 @@ add_git_user: &add_git_user
 #      CIRCLE CI WORKFLOW       #
 #################################
 version: 2
+
+orbs:
+ percy: percy/agent@0.1.2
+
 jobs:
   build:
     docker: *docker
@@ -42,7 +46,7 @@ jobs:
       - save_cache: *save_cache
       - run: yarn test:ci
       - run: yarn percy:publish
-      
+
 
   release:
     docker: *docker
