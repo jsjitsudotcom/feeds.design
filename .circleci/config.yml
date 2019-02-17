@@ -49,14 +49,13 @@ jobs:
       - attach_workspace:
          at: .
       - checkout
-      - attach_workspace:
-         at: .
       - restore_cache: *restore_cache
       - run: *install
       - save_cache: *save_cache
       - run: yarn test:ci
+      - run: yarn build-storybook
       - run: yarn percy:publish
-
+ 
   release:
     docker: *docker
     working_directory: *working-directory
@@ -68,11 +67,25 @@ jobs:
       - run: *add_git_user
       - run: yarn test:ci
       - run: yarn build-storybook
+      - run: yarn percy:publish
       - run: yarn deploy-storybook
+      - run: yarn coveralls
+      - run: yarn release
 
 workflows:
   version: 2
-  test-and-release:
+  build-test-and-release:
+    jobs:
+      - release:
+          filters:
+            branches:
+              only: 
+                - master
+      - percy/finalize_all:
+         requires:
+           - release
+           
+  build-test-and-percy:
     jobs:
       - build:
           filters:
@@ -83,9 +96,3 @@ workflows:
       - percy/finalize_all:
          requires:
            - build
-
-      - release:
-          filters:
-            branches:
-              only: 
-                - master
