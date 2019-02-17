@@ -16,7 +16,7 @@ save_cache: &save_cache
 install: &install yarn install
 
 docker: &docker
-  - image: circleci/node:8
+  - image: circleci/node:8-browsers
 
 working_directory: &working-directory ~/repo
 
@@ -49,7 +49,7 @@ jobs:
       - run: *install
       - save_cache: *save_cache
       - run: yarn test:ci
-      - run: yarn build-storybook
+      - run: yarn percy:publish
 
   release:
     docker: *docker
