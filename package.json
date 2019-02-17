@@ -63,7 +63,6 @@
     "build-storybook": "build-storybook",
     "percy:publish": "build-storybook && percy-storybook --widths=320,1280",
     "deploy-storybook": "aws s3 sync ./storybook-static s3://ui.jsjitsu.com --acl public-read --region=eu-west-1",
-    "precommit": "lint-staged",
     "commit": "git-cz",
     "coveralls": "cat ./coverage/lcov.info | npx coveralls",
     "do:release": "corp-semantic-release",
@@ -155,5 +154,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
