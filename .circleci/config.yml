@@ -15,6 +15,12 @@ save_cache: &save_cache
 
 install: &install yarn install
 
+install_aws_cli: &install_aws_cli
+  - run:
+        command: |
+          sudo apt update   
+          sudo apt -y -qq install awscli
+
 docker: &docker
   - image: circleci/node:8-browsers
 
@@ -61,6 +67,8 @@ jobs:
       - save_cache: *save_cache
       - run: *add_git_user
       - run: yarn test:ci
+      - run: yarn build-storybook
+      - run: yarn deploy-storybook
 
 workflows:
   version: 2
