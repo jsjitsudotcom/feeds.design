@@ -65,12 +65,13 @@ jobs:
       - save_cache: *save_cache
       - run: *add_git_user
       - run: yarn test:ci
+      - run: *install_aws_cli
       - run: yarn build-storybook
       - run: yarn percy:publish
-      - run: *install_aws_cli
       - run: yarn deploy-storybook
       - run: yarn coveralls
       - run: yarn release
+
 
 workflows:
   version: 2
