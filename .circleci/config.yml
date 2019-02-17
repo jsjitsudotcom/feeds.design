@@ -74,7 +74,18 @@ jobs:
 
 workflows:
   version: 2
-  test-and-release:
+  build-test-and-release:
+    jobs:
+      - release:
+          filters:
+            branches:
+              only: 
+                - master
+      - percy/finalize_all:
+         requires:
+           - release
+           
+  build-test-and-percy:
     jobs:
       - build:
           filters:
@@ -85,12 +96,3 @@ workflows:
       - percy/finalize_all:
          requires:
            - build
-
-      - release:
-          filters:
-            branches:
-              only: 
-                - master
-      - percy/finalize_all:
-         requires:
-           - release
