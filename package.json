@@ -61,7 +61,7 @@
     "test:ci": "CI=true node scripts/test.js --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "percy:publish": "build-storybook && percy-storybook --widths=320,1280",
+    "percy:publish": "percy-storybook --widths=320,1280",
     "deploy-storybook": "aws s3 sync ./storybook-static s3://ui.jsjitsu.com --acl public-read --region=eu-west-1",
     "commit": "git-cz",
     "coveralls": "cat ./coverage/lcov.info | npx coveralls",
