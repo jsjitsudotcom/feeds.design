@@ -49,12 +49,18 @@ jobs:
       - attach_workspace:
          at: .
       - checkout
-      - attach_workspace:
-         at: .
       - restore_cache: *restore_cache
       - run: *install
       - save_cache: *save_cache
       - run: yarn test:ci
+      - run: yarn percy:publish
+ 
+  percy:
+    docker: *docker
+    working_directory: *working-directory
+    steps:
+      - attach_workspace:
+         at: .
       - run: yarn percy:publish
 
   release:
@@ -81,10 +87,17 @@ workflows:
             branches:
               ignore: 
                 - master
+      - percy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: 
                 - dev
+
       - percy/finalize_all:
          requires:
-           - build
+           - percy
 
       - release:
           filters:
